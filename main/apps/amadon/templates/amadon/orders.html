@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Order History</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'amadon/css/amadon.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <h2>Thank you for your purchase!</h2>
+        
+        {% if request.session.orders %}
+            We charged your credit card ${{request.session.price}}.
+            
+            <table>
+                <tr>
+                    <th>Order Number</th>    
+                    <th>Item(Name and Quantity)</th>    
+                    <th>Price</th>    
+                    <th>Date Purchased</th> 
+                </tr>
+            {% for order in request.session.orders %}
+                <tr>
+                    <td>{{order.order_number}}</td>
+                    <td>({{order.quantity}}) {{order.item_name}}</td>
+                    <td>{{order.price}}</td>
+                    <td>{{order.created_at}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% endif %}
+        <a href="/"><button id="goback">I wanna buy more!</button></a>
+    </div> 
+</body>
+</html>
